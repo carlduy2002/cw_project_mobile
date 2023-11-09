@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home"
+    tools:context=".FragmentTab.HomeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/frameSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#8FB8BF">
+
+            <ImageButton
+                android:id="@+id/btnCloseSearch"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/arrow_back"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"/>
+
+            <EditText
+                android:id="@+id/eTxtSearch"
+                android:layout_width="355dp"
+                android:layout_height="50dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:hint="Search...."
+                android:background="@null"
+                android:layout_marginLeft="30dp"/>
+
+            <ImageButton
+                android:id="@+id/btnDeleteSearch"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/close"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_marginLeft="380dp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameNavbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#8FB8BF">
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="7dp"
+                android:src="@drawable/addpage"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="DHT Ranger"
+                android:textColor="@color/white"
+                android:textSize="33dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="130dp"/>
+
+            <ImageButton
+                android:id="@+id/btnSearch"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/search"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="375dp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameDelete"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#8FB8BF"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/btnCloseDelete"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/arrow_back"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"/>
+
+            <ImageButton
+                android:id="@+id/btnDeleteAll"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/delete_all"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="350dp"/>
+
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewAllHike"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:layout_marginTop="50dp"/>
+
+        <ImageView
+            android:id="@+id/searchWrongIcon"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/incorrect"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+
+</LinearLayout>

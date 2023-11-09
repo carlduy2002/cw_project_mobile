@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Authenticate.Intro">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="640dp"
+            android:src="@drawable/header_login"
+            android:layout_marginTop="0dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to DHT Ranger App"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_marginTop="320dp"
+            android:layout_marginLeft="80dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Let's start to experience and get nice hikes"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            android:layout_marginTop="350dp"
+            android:layout_marginLeft="50dp"/>
+
+
+        <Button
+            android:id="@+id/btnSignUp"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="400dp"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:text="Sign Up"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:background="@drawable/style_btn"/>
+
+        <Button
+            android:id="@+id/btnSignIn"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="470dp"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:text="Sign In"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:background="@drawable/style_btn"/>
+
+    </FrameLayout>
+
+</LinearLayout>

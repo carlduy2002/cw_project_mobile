@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Hike.HikeDetailFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/background"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_margin="5dp"
+                android:src="@drawable/arrow_back"/>
+
+            <TextView
+                android:id="@+id/txtBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="-30dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="15dp">
+
+                <ImageView
+                    android:id="@+id/hikeImageDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="5dp"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center"
+                    android:src="@drawable/addpage"
+                    android:layout_marginTop="0dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hike Name:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtNameDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Ba Den Moutain"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtLocationDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Ba Den Moutain"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp">
+
+                <RadioGroup
+                    android:id="@+id/parkingPopupGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Parking:"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/parkingYesDetail"
+                        android:layout_width="63dp"
+                        android:layout_height="26dp"
+                        android:layout_marginLeft="80dp"
+                        android:text="Yes"
+                        android:layout_marginTop="-25dp"/>
+
+                    <RadioButton
+                        android:id="@+id/parkingNoDetail"
+                        android:layout_width="60dp"
+                        android:layout_height="26dp"
+                        android:layout_marginTop="-26dp"
+                        android:layout_marginLeft="150dp"
+                        android:text="No" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp">
+
+                <RadioGroup
+                    android:id="@+id/levelPopupGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Level:"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/lowDetail"
+                        android:layout_width="63dp"
+                        android:layout_height="26dp"
+                        android:layout_marginLeft="80dp"
+                        android:text="Low"
+                        android:layout_marginTop="-25dp"/>
+
+                    <RadioButton
+                        android:id="@+id/mediumDetail"
+                        android:layout_width="90dp"
+                        android:layout_height="26dp"
+                        android:layout_marginTop="-26dp"
+                        android:layout_marginLeft="150dp"
+                        android:text="Medium"/>
+
+                    <RadioButton
+                        android:id="@+id/difficultDetail"
+                        android:layout_width="90dp"
+                        android:layout_height="26dp"
+                        android:layout_marginTop="-26dp"
+                        android:layout_marginLeft="250dp"
+                        android:text="Hight" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Length:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtLengthDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Ba Den Moutain"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtDescriptionDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Ba Den Moutain"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="30dp"
+                android:layout_gravity="center">
+
+                <ImageButton
+                    android:background="@android:color/transparent"
+                    android:id="@+id/IbtnDelete"
+                    android:layout_width="60dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/delete"
+                    android:layout_margin="10dp"/>
+
+                <ImageButton
+                    android:background="@android:color/transparent"
+                    android:id="@+id/IbtnUpdate"
+                    android:layout_width="60dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/edit"
+                    android:layout_margin="10dp"/>
+
+                <ImageButton
+                    android:background="@android:color/transparent"
+                    android:id="@+id/IbtnViewObservation"
+                    android:layout_width="60dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/observe"
+                    android:layout_margin="10dp"/>
+
+                <ImageButton
+                    android:background="@android:color/transparent"
+                    android:id="@+id/IbtnShare"
+                    android:layout_width="60dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/share"
+                    android:layout_margin="10dp"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/popup_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="15dp">
+
+            <ImageView
+                android:id="@+id/imgViewPopupEdit"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/head"/>
+
+            <ImageButton
+                android:id="@+id/btnUploadEdit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/camera"
+                android:background="@drawable/style_btn"
+                android:layout_marginLeft="-50dp"
+                android:layout_marginTop="150dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hike Name:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="-10dp"/>
+
+            <EditText
+                android:id="@+id/eTxtNameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="-10dp"
+                android:text="Ba Den Moutain"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:layout_marginTop="-15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eTxtLocationEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="-15dp"
+                android:text="Ba Den Moutain"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/parkingPopupGroupEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Parking:"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <RadioButton
+                    android:id="@+id/parkingYesPopupEdit"
+                    android:layout_width="63dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="-25dp"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/parkingNoPopupEdit"
+                    android:layout_width="60dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="-26dp"
+                    android:text="No" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="15dp">
+
+            <RadioGroup
+                android:id="@+id/levelPopupGroupEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Level:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/lowPopupEdit"
+                    android:layout_width="63dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="80dp"
+                    android:text="Low"
+                    android:layout_marginTop="-25dp"/>
+
+                <RadioButton
+                    android:id="@+id/mediumPopupEdit"
+                    android:layout_width="90dp"
+                    android:layout_height="26dp"
+                    android:layout_marginTop="-26dp"
+                    android:layout_marginLeft="150dp"
+                    android:text="Medium"/>
+
+                <RadioButton
+                    android:id="@+id/difficultPopupEdit"
+                    android:layout_width="90dp"
+                    android:layout_height="26dp"
+                    android:layout_marginTop="-26dp"
+                    android:layout_marginLeft="250dp"
+                    android:text="Hight" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Length:"
+                android:layout_marginTop="-10dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eTxtLengthEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="-10dp"
+                android:inputType="number"
+                android:text="Ba Den Moutain"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description:"
+                android:layout_marginTop="-5dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eTxtDescriptionEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="-5dp"
+                android:text="Ba Den Moutain"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/btnCancelEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"/>
+
+            <Button
+                android:id="@+id/btnConfirmEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirm"
+                android:layout_marginLeft="40dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

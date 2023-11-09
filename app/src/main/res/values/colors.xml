@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="green">#325242</color>
+    <color name="gray">#C0C0C0</color>
+    <color name="silver">#555555</color>
+
+    <color name="home">#1194AA</color>
+    <color name="list">#AE7E0F</color>
+    <color name="add">#5B37B7</color>
+    <color name="profile">#39AE0F</color>
+
+    <color name="home_frame">#331194AA</color>
+    <color name="list_frame">#33AE7E0F</color>
+    <color name="add_frame">#335B37B7</color>
+    <color name="profile_frame">#3339AE0F</color>
+
+    <color name="btn_warm">#B30412</color>
+    <color name="delete_popup">#6F6D6D</color>
+
+    <color name="GradientStrokeBorder">
+        <item name="android:startColor">#91B2E4</item>
+        <item name="android:endColor">#384AC5</item>
+        <item name="android:linear">145</item>
+    </color>
+
+</resources>
