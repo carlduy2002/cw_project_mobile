@@ -69,24 +69,6 @@
             android:layout_marginLeft="134dp"
             android:layout_marginTop="40dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/gray"
-            android:background="#8DC0C0C0"
-            android:visibility="gone"
-            android:id="@+id/backgroundDelete"/>
-
-        <ImageButton
-            android:id="@+id/btnDeleteObservation"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/delete_icon"
-            android:background="@android:color/transparent"
-            android:visibility="gone"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="340dp"/>
-
     </androidx.cardview.widget.CardView>
 
 

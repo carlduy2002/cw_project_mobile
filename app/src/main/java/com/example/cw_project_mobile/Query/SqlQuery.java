@@ -12,22 +12,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.example.cw_project_mobile.Authenticate.SignIn;
 import com.example.cw_project_mobile.DataConnect.DatabaseConnect;
 import com.example.cw_project_mobile.Object.Hikes;
 import com.example.cw_project_mobile.Object.Observations;
+import com.example.cw_project_mobile.Object.Users;
 
 public class SqlQuery {
 
     public void insertHike(String hikeName, String hikeLocation, String hikeParking,
-                           String hikeLength, String hikeLevel, String hikeDescription, String img){
+                           String hikeLength, String hikeLevel, String hikeDescription, String img, int id){
 
         DatabaseConnect connect = new DatabaseConnect();
         Connection conn = connect.connection();
 
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-
-        int id = 18;
 
         Hikes hikes = new Hikes();
         hikes.setHike_name(hikeName);
@@ -42,7 +42,7 @@ public class SqlQuery {
             if(conn != null){
                 String sql = "insert into hikes values('"+hikes.getHike_name()+"', '"+hikes.getHike_location()+"', " +
                         "'"+currentDate+"', '"+hikes.getParking()+"', '"+hikes.getHike_length()+"', '"+hikes.getLevel()+"', " +
-                        "'"+id+"', '"+hikes.getHike_description()+"', '"+hikes.getHike_image()+"')";
+                        "'"+id+"', '"+hikes.getHike_description()+"', '"+hikes.getHike_image()+"', '')";
 
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql);
@@ -81,6 +81,35 @@ public class SqlQuery {
         }
     }
 
+    public void insertUser(String uName, String uEmail, String uPassword, String uAddress){
+
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        Users users = new Users();
+        users.setUsername(uName);
+        users.setEmail(uEmail);
+        users.setPassword(uPassword);
+        users.setAddress(uAddress);
+
+        try{
+            if(conn != null){
+                String sql = "insert into users values('"+users.getUsername()+"', '"+users.getPassword()+"', " +
+                        "'"+users.getEmail()+"', '"+users.getAddress()+"', 'guest')";
+
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                while (rs.next()){
+                    users.setId(rs.getInt(1));
+                }
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+    }
+
     public ArrayList<Hikes> selectAllHikes(){
         DatabaseConnect connect = new DatabaseConnect();
         Connection conn = connect.connection();
@@ -90,7 +119,7 @@ public class SqlQuery {
 
         try{
             if(conn != null){
-                String sql = "select * from hikes";
+                String sql = "select * from hikes where share = 'yes'";
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql);
 
@@ -117,14 +146,12 @@ public class SqlQuery {
     }
 
 
-    public ArrayList<Hikes> selectMyHikes(){
+    public ArrayList<Hikes> selectMyHikes(int id){
         DatabaseConnect connect = new DatabaseConnect();
         Connection conn = connect.connection();
 
         ArrayList<Hikes> lstMyHikes;
         lstMyHikes = new ArrayList<>();
-
-        int id = 18;
 
         try{
             if(conn != null){
@@ -185,6 +212,40 @@ public class SqlQuery {
         return lstObservations;
     }
 
+    public ArrayList<Users> selectAllUsers(String username, String password){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        ArrayList<Users> lstUsers;
+        lstUsers = new ArrayList<>();
+
+        try{
+            if(conn != null){
+                String sql = "select * from users";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                while (rs.next()){
+                   if(username.toString().equals(rs.getString(2)) && password.toString().equals(rs.getString(3))){
+                       Users users = new Users();
+                       users.setId(rs.getInt(1));
+                       users.setUsername(rs.getString(2));
+                       users.setPassword(rs.getString(3));
+                       users.setEmail(rs.getString(4));
+                       users.setAddress(rs.getString(5));
+                       lstUsers.add(users);
+                       break;
+                   }
+                }
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+
+        return lstUsers;
+    }
+
     public int selectHikeMaxID(){
         DatabaseConnect connect = new DatabaseConnect();
         Connection conn = connect.connection();
@@ -233,6 +294,54 @@ public class SqlQuery {
         return maxId;
     }
 
+    public int selectUserMaxID(){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        int maxId = 0;
+
+        try{
+            if(conn != null){
+                String sql = "select max(id) from users";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                while (rs.next()){
+                    maxId = rs.getInt(1);
+                }
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+
+        return maxId;
+    }
+
+    public int selectCountHikes(){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        int countId = 0;
+
+        try{
+            if(conn != null){
+                String sql = "select count(hike_id) from hikes";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                while (rs.next()){
+                    countId = rs.getInt(1);
+                }
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+
+        return countId;
+    }
+
     public void updateHike(String name, String location, String parking, String length, String level,
                            String description, String image, int id){
         DatabaseConnect connect = new DatabaseConnect();
@@ -248,6 +357,38 @@ public class SqlQuery {
                         "hike_level = '"+level+"', " +
                         "hike_description = '"+description+"', " +
                         "hike_image = '"+image+"' where hike_id = '"+id+"'";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+    }
+
+    public void updateHikeInHome(int uid, int hid){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        try{
+            if(conn != null){
+                String sql = "update hikes set share = '' where user_id = '"+uid+"' and hike_id = '"+hid+"'";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+    }
+
+    public void shareHike(int id){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        try{
+            if(conn != null){
+                String sql = "update hikes set share = 'yes' where hike_id = '"+id+"'";
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql);
             }
@@ -276,13 +417,13 @@ public class SqlQuery {
         }
     }
 
-    public void deleteHike(int id){
+    public void deleteHike(int hid, int uid){
         DatabaseConnect connect = new DatabaseConnect();
         Connection conn = connect.connection();
 
         try{
             if(conn != null){
-                String sql = "delete from hikes where hike_id = '"+id+"'";
+                String sql = "delete from hikes where hike_id = '"+hid+"' and user_id = '"+uid+"'";
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql);
             }

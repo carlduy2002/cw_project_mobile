@@ -25,11 +25,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cw_project_mobile.FragmentTab.HomeFragment;
+import com.example.cw_project_mobile.FragmentTab.ListFragment;
+import com.example.cw_project_mobile.FragmentTab.ProfileFragment;
 import com.example.cw_project_mobile.Hike.HikeDetailFragment;
 import com.example.cw_project_mobile.Object.Hikes;
 import com.example.cw_project_mobile.Query.SqlQuery;
@@ -42,15 +45,17 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
     Context context;
     ArrayList<Hikes> lstHikes;
     ArrayList<Hikes> lstFullHikes;
-    int state = 0;
+    int state = 1;
     private boolean isDeleteButtonEnabled = false;
     private int hike_id = 0;
+    private int user_id = 0;
 
-    public HikeAdapter(ArrayList<Hikes> _lstHikes, Context _context, int _state){
+    public HikeAdapter(ArrayList<Hikes> _lstHikes, Context _context, int _state, int _user_id){
         super();
         this.lstHikes = _lstHikes;
         this.context  = _context;
         this.state = _state;
+        this.user_id = _user_id;
         lstFullHikes = _lstHikes;
     }
 
@@ -74,7 +79,7 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
         }
 
         Hikes hike = lstHikes.get(position);
-        hike_id = hike.getId();
+//        hike_id = hike.getId();
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +87,7 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
                 if(isDeleteButtonEnabled == true){
                     isDeleteButtonEnabled = false;
                     holder.btnDeleteHike.setVisibility(View.GONE);
+                    holder.btnUnshareHike.setVisibility(View.GONE);
                     holder.backgroundDelete.setVisibility(View.GONE);
                 }
                 else {
@@ -90,6 +96,7 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("ListHikes", hike);
                     bundle.putInt("state", state);
+                    bundle.putInt("user_id", user_id);
 
                     hikeDetailFragment.setArguments(bundle);
                     activity.getSupportFragmentManager()
@@ -105,9 +112,18 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
             @Override
             public boolean onLongClick(View v) {
                 if (!isDeleteButtonEnabled) {
-                    isDeleteButtonEnabled = true;
-                    holder.btnDeleteHike.setVisibility(View.VISIBLE);
-                    holder.backgroundDelete.setVisibility(View.VISIBLE);
+                    if(state == 0){
+                        isDeleteButtonEnabled = true;
+                        holder.btnUnshareHike.setVisibility(View.VISIBLE);
+                        holder.backgroundDelete.setVisibility(View.VISIBLE);
+                        hike_id = hike.getId();
+                    }
+                    else{
+                        isDeleteButtonEnabled = true;
+                        holder.btnDeleteHike.setVisibility(View.VISIBLE);
+                        holder.backgroundDelete.setVisibility(View.VISIBLE);
+                        hike_id = hike.getId();
+                    }
                 }
                 return true;
             }
@@ -116,13 +132,63 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
         holder.btnDeleteHike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDeletePopup(hike_id);
+                showDeletePopup(hike_id, user_id);
+            }
+        });
+
+        holder.btnUnshareHike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showUnsharePopup(user_id, hike_id);
             }
         });
 
     }
 
-    private void showDeletePopup(int id) {
+    private void showUnsharePopup(int uid, int hid) {
+        Dialog dialog = new Dialog(context);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.check_unshare_popup);
+
+        Button btnCancel = dialog.findViewById(R.id.btnCancelPopup);
+        Button btnConfirm = dialog.findViewById(R.id.btnConfirmPopup);
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SqlQuery sql = new SqlQuery();
+                sql.updateHikeInHome(uid, hid);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("user_id", String.valueOf(uid));
+
+                HomeFragment homeFragment = new HomeFragment();
+                homeFragment.setArguments(bundle);
+                FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragmentContainer, homeFragment).commit();
+
+                dialog.dismiss();
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+    }
+
+    private void showDeletePopup(int hid, int uid) {
         Dialog dialog = new Dialog(context);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.check_delete_popup);
@@ -136,21 +202,24 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
                 SqlQuery sql = new SqlQuery();
 
                 //perform delete hike
-                sql.deleteObservationByHikeID(id);
-
+                sql.deleteObservationByHikeID(hid);
                 //get current max id of hike
-                int currentHikeID = sql.selectHikeMaxID();
+                int currentHikeID = sql.selectCountHikes();
                 //perform delete hike
-                sql.deleteHike(id);
+                sql.deleteHike(hid, uid);
                 //get new max id of hike
-                int newHikeID = sql.selectHikeMaxID();
+                int newHikeID = sql.selectCountHikes();
 
                 if(newHikeID < currentHikeID) {
                     Toast("Delete Hike Succeed!!");
 
-                    HomeFragment homeFragment = new HomeFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_id", String.valueOf(uid));
+
+                    ListFragment listFragment = new ListFragment();
+                    listFragment.setArguments(bundle);
                     FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.fragmentContainer, homeFragment).commit();
+                    fragmentManager.beginTransaction().replace(R.id.fragmentContainer, listFragment).commit();
 
                     dialog.dismiss();
                 }
@@ -199,18 +268,9 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
                 else {
                     ArrayList<Hikes> hikes = new ArrayList<>();
                     for(Hikes i : lstFullHikes){
-                        if(i.getHike_name().toLowerCase().contains(filter)){
+                        if(i.getHike_name().toLowerCase().contains(filter) || i.getHike_location().toLowerCase().contains(filter)){
                             hikes.add(i);
                         }
-
-//                        if(hikes.isEmpty()){
-//                            HomeFragment homeFragment = new HomeFragment();
-//                            homeFragment.showWrongIcon = true;
-//                        }
-//                        else {
-//                            HomeFragment homeFragment = new HomeFragment();
-//                            homeFragment.showWrongIcon = false;
-//                        }
                     }
 
                     lstHikes = hikes;
@@ -233,7 +293,7 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
     public class HikeViewHolder extends RecyclerView.ViewHolder {
         TextView txtName, txtDate, txtLocation;
         ImageView img;
-        ImageButton btnDeleteHike;
+        ImageButton btnDeleteHike, btnUnshareHike;
         CardView cardView;
         LinearLayout backgroundDelete;
         public HikeViewHolder(@NonNull View itemView) {
@@ -243,6 +303,7 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
             txtDate = itemView.findViewById(R.id.txtHikeDate);
             img = itemView.findViewById(R.id.imgHike);
             btnDeleteHike = itemView.findViewById(R.id.btnDeleteHike);
+            btnUnshareHike = itemView.findViewById(R.id.btnUnshareHike);
             cardView = itemView.findViewById(R.id.card_hike);
             backgroundDelete = itemView.findViewById(R.id.backgroundDelete);
 

@@ -7,10 +7,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,10 +25,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cw_project_mobile.FragmentTab.HomeFragment;
+import com.example.cw_project_mobile.Object.Users;
 import com.example.cw_project_mobile.Query.SqlQuery;
 import com.example.cw_project_mobile.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,9 +87,9 @@ public class AddFragment extends Fragment {
     private RadioButton radioButtonParking, radioButtonLevel;
     private ImageView hikeImage;
     String name, location, parking, length, level, description;
-
     private String getUri = "";
     private static final String SDF_FORMAT = "dd-MM-yyyy HH:mm:ss";
+    private String user_id = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,6 +112,11 @@ public class AddFragment extends Fragment {
 
         radioButtonLevel = view.findViewById(R.id.low);
         radioButtonLevel.setChecked(true);
+
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            user_id = bundle.getString("user_id");
+        }
 
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +193,8 @@ public class AddFragment extends Fragment {
         }
     }
 
+
+
     public void showPopupAdd(){
         Dialog dialog = new Dialog(getContext());
         dialog.setCanceledOnTouchOutside(false);
@@ -203,6 +212,12 @@ public class AddFragment extends Fragment {
         RadioButton levelLow = dialog.findViewById(R.id.lowPopup);
         RadioButton levelMedium = dialog.findViewById(R.id.mediumPopup);
         RadioButton levelDifficult = dialog.findViewById(R.id.difficultPopup);
+
+        parkingYes.setEnabled(false);
+        parkingNo.setEnabled(false);
+        levelLow.setEnabled(false);
+        levelMedium.setEnabled(false);
+        levelDifficult.setEnabled(false);
 
         Button btnCancel = dialog.findViewById(R.id.btnCancel);
         Button btnConfirm = dialog.findViewById(R.id.btnConfirm);
@@ -253,7 +268,7 @@ public class AddFragment extends Fragment {
                 int currentMaxID = sql.selectHikeMaxID();
 
                 sql.insertHike(popupName.getText().toString(), popupLocation.getText().toString(), parking,
-                        popupLength.getText().toString(), level, popupDescription.getText().toString(), getUri);
+                        popupLength.getText().toString(), level, popupDescription.getText().toString(), getUri, Integer.parseInt(user_id));
 
                 int newMaxID = sql.selectHikeMaxID();
                 //check and notify
@@ -277,5 +292,4 @@ public class AddFragment extends Fragment {
         dialog.getWindow().setAttributes(lp);
         dialog.show();
     }
-
 }

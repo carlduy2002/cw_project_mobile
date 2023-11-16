@@ -78,6 +78,7 @@ public class ObservationDetailFragment extends Fragment {
     private ImageView imgObser, btnBack;
 
     int observationID = 0;
+    private int state = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +88,7 @@ public class ObservationDetailFragment extends Fragment {
 
         Bundle bundle = getArguments();
         Observations observations = bundle.getParcelable("ListObservations");
+        state = bundle.getInt("state");
 
         observationID = observations.getObser_id();
         getUriObser = observations.getObser_img();
@@ -115,6 +117,11 @@ public class ObservationDetailFragment extends Fragment {
 
         btnDeleteObser = view.findViewById(R.id.IbtnDeleteObser);
         btnUpdateObser = view.findViewById(R.id.IbtnUpdateObser);
+
+        if(state == 0){
+            btnDeleteObser.setVisibility(View.GONE);
+            btnUpdateObser.setVisibility(View.GONE);
+        }
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -78,22 +78,18 @@ public class HikeDetailFragment extends Fragment {
         }
     }
 
-    private ImageButton btnBack, btnDelete, btnEdit, btnViewObser;
+    private ImageButton btnBack, btnDelete, btnEdit, btnViewObser, btnShare;
     private TextView txtBack, txtName, txtLocation, txtLength, txtDescription;
     private RadioButton parkingYes, parkingNo, levelLow, levelMedium, levelDifficult;
     private ImageView img;
-
     private String getUriEdit = "";
-
-
-//    Bundle bundle = getArguments();
-//    Hikes hike = bundle.getParcelable("ListHikes");
-
     String parking = "";
     String level = "";
     String strImage = "";
 
-    int hike_id = 0;
+    private int hike_id = 0;
+    private int state = 0;
+    private int user_id = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,6 +108,7 @@ public class HikeDetailFragment extends Fragment {
         btnDelete = view.findViewById(R.id.IbtnDelete);
         btnEdit = view.findViewById(R.id.IbtnUpdate);
         btnViewObser = view.findViewById(R.id.IbtnViewObservation);
+        btnShare = view.findViewById(R.id.IbtnShare);
 
         parkingYes = view.findViewById(R.id.parkingYesDetail);
         parkingNo = view.findViewById(R.id.parkingNoDetail);
@@ -127,6 +124,14 @@ public class HikeDetailFragment extends Fragment {
 
         Bundle bundle = getArguments();
         Hikes hike = bundle.getParcelable("ListHikes");
+        state = bundle.getInt("state");
+        user_id = bundle.getInt("user_id");
+
+        if(state == 0){
+            btnDelete.setVisibility(View.GONE);
+            btnEdit.setVisibility(View.GONE);
+            btnShare.setVisibility(View.GONE);
+        }
 
         if(hike != null){
 
@@ -166,32 +171,17 @@ public class HikeDetailFragment extends Fragment {
             }
         }
 
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SqlQuery sql = new SqlQuery();
+                sql.shareHike(hike_id);
+            }
+        });
+
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SqlQuery sql = new SqlQuery();
-//
-//                //get current max id of observation
-//                int currentID = sql.selectObservationMaxID();
-//                //perform delete hike
-//                sql.deleteObservationByHikeID(hike.getId());
-//                //get max id of observation after delete
-//                int newID = sql.selectObservationMaxID();
-//
-//                if(newID < currentID){
-//                    //get current max id of hike
-//                    int currentHikeID = sql.selectHikeMaxID();
-//                    //perform delete hike
-//                    sql.deleteHike(hike.getId());
-//                    //get new max id of hike
-//                    int newHikeID = sql.selectHikeMaxID();
-//
-//                    if(newHikeID < currentHikeID) {
-//                        Toast("Delete Hike Succeed!!");
-//                        getParentFragmentManager().popBackStack();
-//                    }
-//                }
-
                 showPopupDelete();
             }
         });
@@ -209,6 +199,7 @@ public class HikeDetailFragment extends Fragment {
                 Bundle bundleObservation = new Bundle();
                 bundleObservation.putParcelable("ListObservations", hike);
                 bundleObservation.putInt("Hike_ID", hike.getId());
+                bundleObservation.putInt("state", state);
 
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 AddObservationFragment addObservationFragment = new AddObservationFragment();
@@ -224,19 +215,12 @@ public class HikeDetailFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bundle.get("state").equals(1)){
-                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                    activity.getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragmentContainer, ListFragment.class, null)
-                            .commit();
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                if(state == 1){
+                    getParentFragmentManager().popBackStack();
                 }
                 else{
-                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                    activity.getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragmentContainer, HomeFragment.class, null)
-                            .commit();
+                    getParentFragmentManager().popBackStack();
                 }
             }
         });
@@ -244,20 +228,12 @@ public class HikeDetailFragment extends Fragment {
         txtBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = getArguments();
-                if(bundle.get("state").equals(1)){
-                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                    activity.getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragmentContainer, ListFragment.class, null)
-                            .commit();
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                if(state == 1){
+                    getParentFragmentManager().popBackStack();
                 }
                 else{
-                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                    activity.getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragmentContainer, HomeFragment.class, null)
-                            .commit();
+                    getParentFragmentManager().popBackStack();
                 }
             }
         });
@@ -283,11 +259,11 @@ public class HikeDetailFragment extends Fragment {
                 sql.deleteObservationByHikeID(hike_id);
 
                 //get current max id of hike
-                int currentHikeID = sql.selectHikeMaxID();
+                int currentHikeID = sql.selectCountHikes();
                 //perform delete hike
-                sql.deleteHike(hike_id);
+                sql.deleteHike(hike_id, user_id);
                 //get new max id of hike
-                int newHikeID = sql.selectHikeMaxID();
+                int newHikeID = sql.selectCountHikes();
 
                 if(newHikeID < currentHikeID) {
                     Toast("Delete Hike Succeed!!");

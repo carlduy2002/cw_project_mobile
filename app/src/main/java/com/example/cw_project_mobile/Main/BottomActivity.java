@@ -3,6 +3,7 @@ package com.example.cw_project_mobile.Main;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,11 +21,15 @@ import com.example.cw_project_mobile.R;
 public class BottomActivity extends AppCompatActivity {
 
     private int selectedTab = 1;
+    private String user_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom);
+
+        Intent intent = getIntent();
+        user_id = intent.getStringExtra("user_id");
 
         final LinearLayout homeLayout = findViewById(R.id.home_layout);
         final LinearLayout listLayout = findViewById(R.id.list_layout);
@@ -42,9 +47,13 @@ public class BottomActivity extends AppCompatActivity {
         final TextView profileText = findViewById(R.id.profile_txt);
 
         //set default fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("user_id", user_id);
+        HomeFragment homeFragment = new HomeFragment();
+        homeFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.fragmentContainer, HomeFragment.class, null)
+                .replace(R.id.fragmentContainer, homeFragment, null)
                 .commit();
 
         //Home tab
@@ -54,9 +63,13 @@ public class BottomActivity extends AppCompatActivity {
                 //check if home tab is already selected or not
                 if(selectedTab != 1){
                     //set home fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_id", user_id);
+                    HomeFragment homeFragment = new HomeFragment();
+                    homeFragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .setReorderingAllowed(true)
-                            .replace(R.id.fragmentContainer, HomeFragment.class, null)
+                            .replace(R.id.fragmentContainer, homeFragment, null)
                             .commit();
 
                     //unselect other tabs expect homw tab
@@ -84,9 +97,9 @@ public class BottomActivity extends AppCompatActivity {
                     scaleAnimation.setFillAfter(true);
                     homeLayout.setAnimation(scaleAnimation);
 
-                    HomeFragment homeFragment = new HomeFragment();
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.fragmentContainer, homeFragment).commit();
+//                    HomeFragment homeFragment = new HomeFragment();
+//                    FragmentManager fragmentManager = getSupportFragmentManager();
+//                    fragmentManager.beginTransaction().replace(R.id.fragmentContainer, homeFragment).commit();
 
                     //set selectedTab = 1
                     selectedTab = 1;
@@ -101,9 +114,13 @@ public class BottomActivity extends AppCompatActivity {
                 //check if list tab is already selected or not
                 if(selectedTab != 2){
                     //set list fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_id", user_id);
+                    ListFragment listFragment = new ListFragment();
+                    listFragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .setReorderingAllowed(true)
-                            .replace(R.id.fragmentContainer, ListFragment.class, null)
+                            .replace(R.id.fragmentContainer, listFragment, null)
                             .commit();
 
                     //unselect other tabs expect list tab
@@ -134,7 +151,6 @@ public class BottomActivity extends AppCompatActivity {
                     //set selectTab = 2
                     selectedTab = 2;
                 }
-
             }
         });
 
@@ -145,9 +161,13 @@ public class BottomActivity extends AppCompatActivity {
                 //check if add tab is already selected or not
                 if(selectedTab != 3){
                     //set add fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_id", user_id);
+                    AddFragment addFragment = new AddFragment();
+                    addFragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .setReorderingAllowed(true)
-                            .replace(R.id.fragmentContainer, AddFragment.class, null)
+                            .replace(R.id.fragmentContainer, addFragment, null)
                             .commit();
 
                     //unselect other tabs expect add tab

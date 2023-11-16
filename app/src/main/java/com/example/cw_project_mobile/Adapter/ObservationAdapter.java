@@ -27,6 +27,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cw_project_mobile.FragmentTab.HomeFragment;
+import com.example.cw_project_mobile.Hike.HikeDetailFragment;
 import com.example.cw_project_mobile.Object.Observations;
 import com.example.cw_project_mobile.Observation.AddObservationFragment;
 import com.example.cw_project_mobile.Observation.ObservationDetailFragment;
@@ -42,7 +43,6 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
     private ArrayList<Observations> lstFullObservations;
     private boolean isDeleteButtonEnabled = false;
     private int obserState = 0;
-    private int observation_id = 0;
 
     public ObservationAdapter(ArrayList<Observations> _lstObservations, Context _context, int _obserState) {
         this.context = _context;
@@ -72,103 +72,24 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
         }
 
         Observations observations = lstObservations.get(position);
-        observation_id = observations.getObser_id();
 
         holder.cardViewObservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isDeleteButtonEnabled == true){
-                    isDeleteButtonEnabled = false;
-                    holder.btnDeleteObservation.setVisibility(View.GONE);
-                    holder.backgroundDelete.setVisibility(View.GONE);
-                }
-                else {
-                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                    ObservationDetailFragment observationDetailFragment = new ObservationDetailFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("ListObservations", observations);
-                    bundle.putInt("state", obserState);
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                ObservationDetailFragment observationDetailFragment = new ObservationDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("ListObservations", observations);
+                bundle.putInt("state", obserState);
 
-                    observationDetailFragment.setArguments(bundle);
-                    activity.getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragmentContainer, observationDetailFragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
+                observationDetailFragment.setArguments(bundle);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentContainer, observationDetailFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
-
-        holder.cardViewObservation.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (!isDeleteButtonEnabled) {
-                    isDeleteButtonEnabled = true;
-                    holder.btnDeleteObservation.setVisibility(View.VISIBLE);
-                    holder.backgroundDelete.setVisibility(View.VISIBLE);
-                }
-                return true;
-            }
-        });
-
-        holder.btnDeleteObservation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDeletePopup(observation_id);
-            }
-        });
-    }
-
-    private void showDeletePopup(int id) {
-        Dialog dialog = new Dialog(context);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.check_delete_popup);
-
-        Button btnCancel = dialog.findViewById(R.id.btnCancelDeletePopup);
-        Button btnConfirm = dialog.findViewById(R.id.btnConfirmDeletePopup);
-
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SqlQuery sql = new SqlQuery();
-
-                //get current max id of observation
-                int currentID = sql.selectObservationMaxID();
-                //perform delete observation
-                sql.deleteObservation(id);
-                //get new max id of observation
-                int newID = sql.selectObservationMaxID();
-
-                if(newID < currentID){
-                    Toast("Delete Observation Succeed!!");
-
-                    AddObservationFragment addObservationFragment = new AddObservationFragment();
-                    FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.fragmentContainer, addObservationFragment).commit();
-
-                    dialog.dismiss();
-                }
-                else{
-                    Toast("Delete Observation Failed!!");
-                }
-            }
-        });
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.CENTER;
-
-        dialog.getWindow().setAttributes(lp);
-        dialog.show();
     }
 
     public void Toast(String message){
@@ -219,7 +140,6 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
         private ImageView obserImage;
         private TextView txtName, txtDate;
         private CardView cardViewObservation;
-        private ImageButton btnDeleteObservation;
         private LinearLayout backgroundDelete;
         public ObserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -227,7 +147,6 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
             obserImage = itemView.findViewById(R.id.imgObservation);
             txtName = itemView.findViewById(R.id.txtObservationName);
             txtDate = itemView.findViewById(R.id.txtObservationDate);
-            btnDeleteObservation = itemView.findViewById(R.id.btnDeleteObservation);
             cardViewObservation = itemView.findViewById(R.id.card_observation);
             backgroundDelete = itemView.findViewById(R.id.backgroundDelete);
 

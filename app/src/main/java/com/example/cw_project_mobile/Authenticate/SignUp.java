@@ -6,12 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.cw_project_mobile.Query.SqlQuery;
 import com.example.cw_project_mobile.R;
 
 public class SignUp extends AppCompatActivity {
 
     private Button btnSignUp;
+    private EditText username, email, password, confirmPassword, address;
+    private String u_name = "", u_email = "", u_password = "", u_confrimPasword = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +25,77 @@ public class SignUp extends AppCompatActivity {
 
         btnSignUp = findViewById(R.id.SignUp);
 
+        username = findViewById(R.id.username);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        confirmPassword = findViewById(R.id.confirmPassword);
+        address = findViewById(R.id.address);
+
+
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignUp.this, SignIn.class);
-                startActivity(intent);
+                if(validateUsers() == true){
+                    SqlQuery sql = new SqlQuery();
+
+                    //get current max id
+                    int maxID = sql.selectUserMaxID();
+
+                    //insert user
+                    sql.insertUser(u_name, u_email, u_password, address.getText().toString());
+
+                    //get new max id
+                    int newID = sql.selectUserMaxID();
+
+                    if(newID > maxID){
+                        Toast("Sign Up succeed");
+
+                        Intent intent = new Intent(SignUp.this, SignIn.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast("Sign Up failed");
+                    }
+                }
             }
         });
+    }
+
+    public boolean validateUsers(){
+        u_name = username.getText().toString();
+        u_email = email.getText().toString();
+        u_password = password.getText().toString();
+        u_confrimPasword = confirmPassword.getText().toString();
+
+        if(u_name.matches("") && u_email.matches("") && u_password.matches("") && u_confrimPasword.matches("")){
+            Toast("Please, enter all fields");
+            return false;
+        }
+        if(u_name.matches("")){
+            Toast("Please, enter username field");
+            return false;
+        }
+        if(u_email.matches("")){
+            Toast("Please, enter email field");
+            return false;
+        }
+        if(u_password.matches("")){
+            Toast("Please, enter password field");
+            return false;
+        }
+        if(u_confrimPasword.matches("")){
+            Toast("Please, enter confirm password field");
+            return false;
+        }
+        if(!u_confrimPasword.equals(u_password)){
+            Toast("Password and Confirm Password id not match");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void Toast(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

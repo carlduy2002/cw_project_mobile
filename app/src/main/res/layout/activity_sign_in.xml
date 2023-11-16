@@ -26,7 +26,7 @@
         android:background="@drawable/edittext_bkg"
         android:drawableLeft="@drawable/ic_track_name"
         android:drawablePadding="8dp"
-        android:hint="Email"
+        android:hint="Password"
         android:padding="8dp" />
 
     <Button

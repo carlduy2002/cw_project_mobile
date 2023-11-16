@@ -80,33 +80,6 @@
 
         </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/frameDelete"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#8FB8BF"
-            android:visibility="gone">
-
-            <ImageButton
-                android:id="@+id/btnCloseDelete"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/arrow_back"
-                android:background="@android:color/transparent"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="5dp"/>
-
-            <ImageButton
-                android:id="@+id/btnDeleteAll"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/delete_all"
-                android:background="@android:color/transparent"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="350dp"/>
-
-        </FrameLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewAllHike"
             android:layout_width="match_parent"

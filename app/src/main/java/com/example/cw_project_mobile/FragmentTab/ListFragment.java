@@ -70,13 +70,20 @@ public class ListFragment extends Fragment {
     private FrameLayout frameLayoutNavbar, frameLayoutSearch;
     private ImageButton btnCloseSearch, btnDeleteSearch, btnSearch;
     private EditText eTxtSearch;
-
+    private String user_id = "";
+    private int getUID = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list, container, false);
+
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            user_id = bundle.getString("user_id");
+            getUID = Integer.parseInt(user_id);
+        }
 
         recyclerView = view.findViewById(R.id.recyclerViewMyHike);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -91,7 +98,7 @@ public class ListFragment extends Fragment {
         eTxtSearch = view.findViewById(R.id.eTxtSearch);
 
         SqlQuery sqlQuery = new SqlQuery();
-        HikeAdapter myHikeAdapter = new HikeAdapter(sqlQuery.selectMyHikes(), getContext(), 1);
+        HikeAdapter myHikeAdapter = new HikeAdapter(sqlQuery.selectMyHikes(Integer.parseInt(user_id)), getContext(), 1, getUID);
 
         recyclerView.setAdapter(myHikeAdapter);
 

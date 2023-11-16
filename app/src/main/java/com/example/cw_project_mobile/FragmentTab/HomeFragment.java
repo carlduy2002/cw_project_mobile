@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.cw_project_mobile.Adapter.HikeAdapter;
+import com.example.cw_project_mobile.Authenticate.SignIn;
 import com.example.cw_project_mobile.Query.SqlQuery;
 import com.example.cw_project_mobile.R;
 
@@ -70,9 +71,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private ImageButton btnSearch, btnDeleteTextSearch, btnCloseSearch;
     private EditText eTxtSearch;
-//    private ImageView searchWrongIcon;
-//    public boolean showWrongIcon = false;
-    FrameLayout layoutSearch, layoutNavbar, layoutDelete;
+    FrameLayout layoutSearch, layoutNavbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,13 +84,9 @@ public class HomeFragment extends Fragment {
 
         layoutNavbar = view.findViewById(R.id.frameNavbar);
 
-//        layoutDelete = view.findViewById(R.id.frameDelete);
-
         btnCloseSearch = view.findViewById(R.id.btnCloseSearch);
         btnSearch = view.findViewById(R.id.btnSearch);
         btnDeleteTextSearch = view.findViewById(R.id.btnDeleteSearch);
-
-//        searchWrongIcon = view.findViewById(R.id.searchWrongIcon);
 
         eTxtSearch = view.findViewById(R.id.eTxtSearch);
 
@@ -100,7 +95,11 @@ public class HomeFragment extends Fragment {
 
         SqlQuery sqlQuery = new SqlQuery();
 
-        HikeAdapter hikeAdapter = new HikeAdapter(sqlQuery.selectAllHikes(), getContext(), 0);
+        Bundle bundle = getArguments();
+        String user_id = bundle.getString("user_id");
+        int getUID = Integer.parseInt(user_id);
+
+        HikeAdapter hikeAdapter = new HikeAdapter(sqlQuery.selectAllHikes(), getContext(), 0, getUID);
         recyclerView.setAdapter(hikeAdapter);
 
         TextWatcher textWatcher = new TextWatcher() {
@@ -155,7 +154,5 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-//    public void showWrongIconSearch(){
-//        searchWrongIcon.setVisibility(View.VISIBLE);
-//    }
+
 }

@@ -9,7 +9,7 @@ public class Hikes implements Parcelable{
     private int id;
     private String hike_name, hike_location, hike_length, hike_description, parking, level;
     private String hike_date;
-    private String hike_image;
+    private String hike_image, hike_share;
 
 
 
@@ -26,6 +26,7 @@ public class Hikes implements Parcelable{
         level = in.readString();
         hike_date = in.readString();
         hike_image = in.readString();
+        hike_share = in.readString();
     }
 
     public static final Creator<Hikes> CREATOR = new Creator<Hikes>() {
@@ -39,6 +40,14 @@ public class Hikes implements Parcelable{
             return new Hikes[size];
         }
     };
+
+    public String getHike_share() {
+        return hike_share;
+    }
+
+    public void setHike_share(String hike_share) {
+        this.hike_share = hike_share;
+    }
 
     public int getId() {
         return id;
@@ -119,6 +128,7 @@ public class Hikes implements Parcelable{
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+
         dest.writeInt(id);
         dest.writeString(hike_name);
         dest.writeString(hike_location);
@@ -128,5 +138,6 @@ public class Hikes implements Parcelable{
         dest.writeString(level);
         dest.writeString(hike_date);
         dest.writeString(hike_image);
+        dest.writeString(hike_share);
     }
 }

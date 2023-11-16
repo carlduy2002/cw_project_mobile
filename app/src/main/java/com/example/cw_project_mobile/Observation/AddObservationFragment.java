@@ -80,6 +80,7 @@ public class AddObservationFragment extends Fragment {
     private ImageButton btnBack, btnAddNewObser, btnSearchObser, btnCloseSearchObser, btnDeleteSearchObser;
     private EditText eTxtSearchObser;
     private RecyclerView recyclerViewObser;
+    private int state = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,11 +106,16 @@ public class AddObservationFragment extends Fragment {
 
         Bundle getHikeID = getArguments();
         int hikeID = getHikeID.getInt("Hike_ID");
+        state = getHikeID.getInt("state");
+
+        if(state == 0){
+            btnAddNewObser.setVisibility(View.GONE);
+        }
 
         SqlQuery sqlQuery = new SqlQuery();
         recyclerViewObser.setLayoutManager(new LinearLayoutManager(getContext()));
         ObservationAdapter observationAdapter = new ObservationAdapter(sqlQuery.selectObservationsOfHike(hikeID),
-                getContext(), 0);
+                getContext(), state);
         recyclerViewObser.setAdapter(observationAdapter);
 
         TextWatcher textWatcher = new TextWatcher() {
