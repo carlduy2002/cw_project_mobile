@@ -8,10 +8,11 @@
     android:background="@color/home">
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragmentContainer"
-        android:layout_above="@+id/bottomBar"/>
+        android:layout_above="@+id/bottomBar"
+        android:layout_marginBottom="-82dp" />
 
     <LinearLayout
         android:id="@+id/bottomBar"
