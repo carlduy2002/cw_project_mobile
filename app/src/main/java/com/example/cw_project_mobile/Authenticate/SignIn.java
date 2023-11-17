@@ -46,7 +46,10 @@ public class SignIn extends AppCompatActivity{
             public void onClick(View v) {
                 if(validateLogin() == true){
                     SqlQuery sql = new SqlQuery();
-                    lstUsers = sql.selectAllUsers(username.getText().toString().trim(), password.getText().toString().trim());
+                    HashPassword hashPassword = new HashPassword();
+                    String hashPwd = hashPassword.hashPassword(password.getText().toString().trim());
+
+                    lstUsers = sql.selectAllUsers(username.getText().toString().trim(), hashPwd);
                     if(lstUsers != null){
                         Toast("Login succeed");
 

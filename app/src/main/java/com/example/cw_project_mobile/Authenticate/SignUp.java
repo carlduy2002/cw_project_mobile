@@ -37,12 +37,14 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View v) {
                 if(validateUsers() == true){
                     SqlQuery sql = new SqlQuery();
+                    HashPassword hashPassword = new HashPassword();
+                    String hashPwd = hashPassword.hashPassword(u_password);
 
                     //get current max id
                     int maxID = sql.selectUserMaxID();
 
                     //insert user
-                    sql.insertUser(u_name, u_email, u_password, address.getText().toString());
+                    sql.insertUser(u_name, u_email, hashPwd, address.getText().toString());
 
                     //get new max id
                     int newID = sql.selectUserMaxID();
@@ -66,6 +68,7 @@ public class SignUp extends AppCompatActivity {
         u_email = email.getText().toString();
         u_password = password.getText().toString();
         u_confrimPasword = confirmPassword.getText().toString();
+        String regexEmail = "^([a-zA-z0-9]+@gmail+\\.[a-zA-Z]{2,})$";
 
         if(u_name.matches("") && u_email.matches("") && u_password.matches("") && u_confrimPasword.matches("")){
             Toast("Please, enter all fields");
@@ -79,8 +82,16 @@ public class SignUp extends AppCompatActivity {
             Toast("Please, enter email field");
             return false;
         }
+        if(!u_email.matches(regexEmail)){
+            Toast("Email is invalid");
+            return false;
+        }
         if(u_password.matches("")){
             Toast("Please, enter password field");
+            return false;
+        }
+        if(u_password.length() < 8){
+            Toast("Please, enter password more than 8 characters");
             return false;
         }
         if(u_confrimPasword.matches("")){
