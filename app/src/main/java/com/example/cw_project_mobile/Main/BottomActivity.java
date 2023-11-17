@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -16,12 +17,16 @@ import com.example.cw_project_mobile.Hike.AddFragment;
 import com.example.cw_project_mobile.FragmentTab.HomeFragment;
 import com.example.cw_project_mobile.FragmentTab.ListFragment;
 import com.example.cw_project_mobile.FragmentTab.ProfileFragment;
+import com.example.cw_project_mobile.Object.Users;
 import com.example.cw_project_mobile.R;
+
+import java.util.ArrayList;
 
 public class BottomActivity extends AppCompatActivity {
 
     private int selectedTab = 1;
     private String user_id = "";
+    private ArrayList<Users> lstUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,9 @@ public class BottomActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         user_id = intent.getStringExtra("user_id");
+
+//        lstUsers = new ArrayList<>();
+//        lstUsers = intent.getParcelableArrayListExtra("lstUsers");
 
         final LinearLayout homeLayout = findViewById(R.id.home_layout);
         final LinearLayout listLayout = findViewById(R.id.list_layout);
@@ -208,9 +216,26 @@ public class BottomActivity extends AppCompatActivity {
                 //check if profile is already selected or not
                 if(selectedTab != 4){
                     //set profile fragment
+                    Users users = new Users();
+                    Intent getIntent = getIntent();
+                    lstUsers = getIntent.getParcelableArrayListExtra("lstUsers");
+
+                    for(Users i : lstUsers){
+                        users.setId(i.getId());
+                        users.setUsername(i.getUsername());
+                        users.setPassword(i.getPassword());
+                        users.setEmail(i.getEmail());
+                        users.setAddress(i.getAddress());
+                        users.setAvatar(i.getAvatar());
+                    }
+
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("lstUsers", users);
+                    ProfileFragment profileFragment = new ProfileFragment();
+                    profileFragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .setReorderingAllowed(true)
-                            .replace(R.id.fragmentContainer, ProfileFragment.class, null)
+                            .replace(R.id.fragmentContainer, profileFragment, null)
                             .commit();
 
                     //unselect other tabs expect profile tab

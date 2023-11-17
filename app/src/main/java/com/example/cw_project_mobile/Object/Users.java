@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Users implements Parcelable {
-    String username, email, password, address;
+    String username, email, password, address, avatar;
     int id;
 
     public Users() {
@@ -17,6 +17,7 @@ public class Users implements Parcelable {
         email = in.readString();
         password = in.readString();
         address = in.readString();
+        avatar = in.readString();
         id = in.readInt();
     }
 
@@ -31,6 +32,14 @@ public class Users implements Parcelable {
             return new Users[size];
         }
     };
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public int getId() {
         return id;
@@ -84,6 +93,7 @@ public class Users implements Parcelable {
         dest.writeString(email);
         dest.writeString(password);
         dest.writeString(address);
+        dest.writeString(avatar);
         dest.writeInt(id);
     }
 }

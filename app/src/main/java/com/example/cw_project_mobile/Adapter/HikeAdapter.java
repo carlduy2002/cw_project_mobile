@@ -79,7 +79,6 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
         }
 
         Hikes hike = lstHikes.get(position);
-//        hike_id = hike.getId();
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

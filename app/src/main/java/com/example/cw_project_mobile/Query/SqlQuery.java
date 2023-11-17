@@ -95,7 +95,7 @@ public class SqlQuery {
         try{
             if(conn != null){
                 String sql = "insert into users values('"+users.getUsername()+"', '"+users.getPassword()+"', " +
-                        "'"+users.getEmail()+"', '"+users.getAddress()+"', 'guest')";
+                        "'"+users.getEmail()+"', '"+users.getAddress()+"', 'guest', '')";
 
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql);
@@ -233,6 +233,7 @@ public class SqlQuery {
                        users.setPassword(rs.getString(3));
                        users.setEmail(rs.getString(4));
                        users.setAddress(rs.getString(5));
+                       users.setAvatar(rs.getString(7));
                        lstUsers.add(users);
                        break;
                    }
@@ -415,6 +416,79 @@ public class SqlQuery {
         catch (Exception ex){
             Log.e("Error", ex.getMessage());
         }
+    }
+
+    public ArrayList<Users> updateUsers(String username, String email, String address, String avatar, int id){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        ArrayList<Users> lstUsers = new ArrayList<>();
+
+        try{
+            if(conn != null){
+                String sql = "update users set username = '"+username+"', email = '"+email+"', address = '"+address+"' , " +
+                        "avatar = '"+avatar+"' where id = '"+id+"'";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                while (rs.next()){
+                    Users users = new Users();
+                    users.setId(rs.getInt(1));
+                    users.setUsername(rs.getString(2));
+                    users.setPassword(rs.getString(3));
+                    users.setEmail(rs.getString(4));
+                    users.setAddress(rs.getString(5));
+                    users.setAvatar(rs.getString(7));
+
+                    lstUsers.add(users);
+                }
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+
+        return lstUsers;
+    }
+
+    public void changePassword(String password, int id){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        try{
+            if(conn != null){
+                String sql = "update users set password = '"+password+"' where id = '"+id+"'";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+    }
+
+    public String selectPasword(int id){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        String pwd = "";
+
+        try{
+            if(conn != null){
+                String sql = "select password from users where id = '"+id+"'";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                while (rs.next()){
+                    pwd = rs.getString(1);
+                }
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+
+        return pwd;
     }
 
     public void deleteHike(int hid, int uid){

@@ -50,7 +50,7 @@ public class SignIn extends AppCompatActivity{
                     String hashPwd = hashPassword.hashPassword(password.getText().toString().trim());
 
                     lstUsers = sql.selectAllUsers(username.getText().toString().trim(), hashPwd);
-                    if(lstUsers != null){
+                    if(lstUsers.size() > 0){
                         Toast("Login succeed");
 
                         for(Users i : lstUsers){
@@ -60,6 +60,7 @@ public class SignIn extends AppCompatActivity{
 
                         Intent intent = new Intent(SignIn.this, BottomActivity.class);
                         intent.putExtra("user_id", user_id);
+                        intent.putParcelableArrayListExtra("lstUsers", lstUsers);
                         startActivity(intent);
                     }
                     else {

@@ -1,14 +1,37 @@
 package com.example.cw_project_mobile.FragmentTab;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.cw_project_mobile.Authenticate.HashPassword;
+import com.example.cw_project_mobile.Authenticate.SignIn;
+import com.example.cw_project_mobile.Hike.AddFragment;
+import com.example.cw_project_mobile.Hike.HikeDetailFragment;
+import com.example.cw_project_mobile.Object.Users;
+import com.example.cw_project_mobile.Query.SqlQuery;
 import com.example.cw_project_mobile.R;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.material.imageview.ShapeableImageView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,10 +80,292 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    private ShapeableImageView avatar;
+    private ImageButton btnEditProfile, btnChangepassword, btnLogout;
+    private TextView txtUsername, txtEmail, txtAddress;
+    private String getUri = "";
+    private int user_id = 0;
+    private Users users;
+    private ArrayList<Users> lstUsers;
+    private String password = "";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        Bundle bundle = getArguments();
+        users = bundle.getParcelable("lstUsers");
+
+        avatar = view.findViewById(R.id.avatar);
+        user_id = users.getId();
+        password = users.getPassword();
+
+        btnEditProfile = view.findViewById(R.id.Ibtn_EditProfile);
+        btnChangepassword = view.findViewById(R.id.Ibtn_ChangePassword);
+        btnLogout = view.findViewById(R.id.Ibtn_Logout);
+
+        txtUsername = view.findViewById(R.id.txtUsername);
+        txtEmail = view.findViewById(R.id.txtEmail);
+        txtAddress = view.findViewById(R.id.txtAddress);
+
+        if(users.getAvatar().matches("")){
+            avatar.setImageResource(R.drawable.user);
+        }
+        else {
+            avatar.setImageURI(Uri.parse(users.getAvatar().toString()));
+        }
+
+        txtUsername.setText(users.getUsername());
+        txtEmail.setText(users.getEmail());
+        txtAddress.setText(users.getAddress());
+
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupEdit(txtUsername.getText().toString(), txtEmail.getText().toString(), txtAddress.getText().toString());
+            }
+        });
+
+        btnChangepassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChangePasswordPopup();
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SignIn.class);
+                startActivity(intent);
+            }
+        });
+
+        return view;
+    }
+
+    private void showChangePasswordPopup() {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.change_password_popup);
+
+        EditText editCurrentPwd = dialog.findViewById(R.id.editCurrentPwd);
+
+        Button btnConfirm = dialog.findViewById(R.id.btnConfirm);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashPassword hashPassword = new HashPassword();
+                SqlQuery sql = new SqlQuery();
+                String currentPwd = "";
+
+                if(!editCurrentPwd.getText().toString().matches("")){
+                    currentPwd = hashPassword.hashPassword(editCurrentPwd.getText().toString());
+
+                    String oldPwd = sql.selectPasword(user_id);
+
+                    if(currentPwd.matches(oldPwd)){
+                        dialog.dismiss();
+                        showCreateNewPassowrdPopup();
+                    }
+                    else {
+                        Toast("Current Pasword is incorrectly");
+                    }
+                }
+                else {
+                    Toast("Please, enter Current Password");
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+    }
+
+    private void showCreateNewPassowrdPopup() {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.create_new_password_popup);
+
+        EditText editNewPwd = dialog.findViewById(R.id.editNewPwd);
+        EditText editConfirmPwd = dialog.findViewById(R.id.editConfirmPwd);
+
+        Button btnConfirm = dialog.findViewById(R.id.btnConfirmPassword);
+        Button btnCancel = dialog.findViewById(R.id.btnCancelPassword);
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashPassword hashPassword = new HashPassword();
+                SqlQuery sql = new SqlQuery();
+
+                if(!editNewPwd.getText().toString().matches("")){
+                    if(!editConfirmPwd.getText().toString().matches("")){
+                        if(editNewPwd.getText().toString().matches(editConfirmPwd.getText().toString())){
+                            String newPassword = hashPassword.hashPassword(editNewPwd.getText().toString());
+
+                            //get old pass
+                            String oldPwd = sql.selectPasword(user_id);
+                            //change pass
+                            sql.changePassword(newPassword, user_id);
+                            //get new pass
+                            String newPwd = sql.selectPasword(user_id);
+
+                            if(!newPwd.matches(oldPwd)){
+                                Toast("Change Password succeed");
+                                dialog.dismiss();
+                            }
+                            else {
+                                Toast("Change Password failed");
+                            }
+                        }
+                        else {
+                            Toast("New Password and Confirm Password is not match");
+                        }
+                    }
+                    else {
+                        Toast("Please, enter Confirm Password");
+                    }
+                }
+                else {
+                    Toast("Please, enter New Password");
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+    }
+
+    private ShapeableImageView avatarUpdate;
+
+    private void showPopupEdit(String username, String email, String address) {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.update_profile_popup);
+
+        avatarUpdate = dialog.findViewById(R.id.avatarUpdate);
+
+        ImageButton btnUpload = dialog.findViewById(R.id.btnUploadAvatar);
+
+        Button btnCancelEdit = dialog.findViewById(R.id.btnCancelEdit);
+        Button btnConfirmEdit = dialog.findViewById(R.id.btnConfirmEdit);
+
+        EditText editUsername = dialog.findViewById(R.id.editUsername);
+        EditText editEmail = dialog.findViewById(R.id.editEmail);
+        EditText editAddess = dialog.findViewById(R.id.editAddress);
+
+        if(users.getAvatar().matches("")){
+            avatarUpdate.setImageResource(R.drawable.user);
+        }
+        else {
+            avatarUpdate.setImageURI(Uri.parse(users.getAvatar().toString()));
+        }
+
+        editUsername.setText(username);
+        editEmail.setText(email);
+        editAddess.setText(address);
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.with(ProfileFragment.this)
+                        .crop()                                 //Crop image
+                        .compress(1024)			        //Final image size will be less than 1 MB
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080
+                        .start();
+            }
+        });
+
+        btnConfirmEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SqlQuery sql = new SqlQuery();
+                String regexEmail = "^([a-zA-z0-9]+@gmail+\\.[a-zA-Z]{2,})$";
+
+                if(editEmail.getText().toString().matches(regexEmail)){
+                    lstUsers = sql.updateUsers(editUsername.getText().toString(), editEmail.getText().toString(),
+                            editAddess.getText().toString(), getUri,user_id);
+
+//                    for(Users i : lstUsers){
+//                        avatar.setImageURI(Uri.parse(i.getAvatar().toString()));
+//                        txtUsername.setText(i.getUsername().toString());
+//                        txtEmail.setText(i.getEmail().toString());
+//                        txtAddress.setText(i.getAddress().toString());
+//                    }
+
+                    avatar.setImageURI(Uri.parse(getUri.toString()));
+                    txtUsername.setText(editUsername.getText());
+                    txtEmail.setText(editEmail.getText());
+                    txtAddress.setText(editAddess.getText());
+
+                    dialog.dismiss();
+                }
+                else {
+                    Toast("Email is invalid");
+                }
+            }
+        });
+
+        btnCancelEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri = data.getData();
+        getUri = uri.toString();
+        avatarUpdate.setImageURI(Uri.parse(getUri));
+    }
+
+    private void Toast(String message){
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
