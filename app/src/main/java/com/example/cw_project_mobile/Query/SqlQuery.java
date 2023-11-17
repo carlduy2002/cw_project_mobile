@@ -418,11 +418,9 @@ public class SqlQuery {
         }
     }
 
-    public ArrayList<Users> updateUsers(String username, String email, String address, String avatar, int id){
+    public void updateUsers(String username, String email, String address, String avatar, int id){
         DatabaseConnect connect = new DatabaseConnect();
         Connection conn = connect.connection();
-
-        ArrayList<Users> lstUsers = new ArrayList<>();
 
         try{
             if(conn != null){
@@ -430,25 +428,11 @@ public class SqlQuery {
                         "avatar = '"+avatar+"' where id = '"+id+"'";
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql);
-
-                while (rs.next()){
-                    Users users = new Users();
-                    users.setId(rs.getInt(1));
-                    users.setUsername(rs.getString(2));
-                    users.setPassword(rs.getString(3));
-                    users.setEmail(rs.getString(4));
-                    users.setAddress(rs.getString(5));
-                    users.setAvatar(rs.getString(7));
-
-                    lstUsers.add(users);
-                }
             }
         }
         catch (Exception ex){
             Log.e("Error", ex.getMessage());
         }
-
-        return lstUsers;
     }
 
     public void changePassword(String password, int id){

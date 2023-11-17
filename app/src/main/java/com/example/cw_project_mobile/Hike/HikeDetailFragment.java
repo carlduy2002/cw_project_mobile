@@ -85,7 +85,6 @@ public class HikeDetailFragment extends Fragment {
     private String getUriEdit = "";
     String parking = "";
     String level = "";
-    String strImage = "";
 
     private int hike_id = 0;
     private int state = 0;

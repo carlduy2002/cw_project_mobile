@@ -86,7 +86,6 @@ public class ProfileFragment extends Fragment {
     private String getUri = "";
     private int user_id = 0;
     private Users users;
-    private ArrayList<Users> lstUsers;
     private String password = "";
 
     @Override
@@ -98,9 +97,11 @@ public class ProfileFragment extends Fragment {
         Bundle bundle = getArguments();
         users = bundle.getParcelable("lstUsers");
 
-        avatar = view.findViewById(R.id.avatar);
         user_id = users.getId();
         password = users.getPassword();
+        getUri = users.getAvatar();
+
+        avatar = view.findViewById(R.id.avatar);
 
         btnEditProfile = view.findViewById(R.id.Ibtn_EditProfile);
         btnChangepassword = view.findViewById(R.id.Ibtn_ChangePassword);
@@ -287,11 +288,11 @@ public class ProfileFragment extends Fragment {
         EditText editEmail = dialog.findViewById(R.id.editEmail);
         EditText editAddess = dialog.findViewById(R.id.editAddress);
 
-        if(users.getAvatar().matches("")){
+        if(getUri.matches("")){
             avatarUpdate.setImageResource(R.drawable.user);
         }
         else {
-            avatarUpdate.setImageURI(Uri.parse(users.getAvatar().toString()));
+            avatarUpdate.setImageURI(Uri.parse(getUri));
         }
 
         editUsername.setText(username);
@@ -316,17 +317,15 @@ public class ProfileFragment extends Fragment {
                 String regexEmail = "^([a-zA-z0-9]+@gmail+\\.[a-zA-Z]{2,})$";
 
                 if(editEmail.getText().toString().matches(regexEmail)){
-                    lstUsers = sql.updateUsers(editUsername.getText().toString(), editEmail.getText().toString(),
+                    sql.updateUsers(editUsername.getText().toString(), editEmail.getText().toString(),
                             editAddess.getText().toString(), getUri,user_id);
 
-//                    for(Users i : lstUsers){
-//                        avatar.setImageURI(Uri.parse(i.getAvatar().toString()));
-//                        txtUsername.setText(i.getUsername().toString());
-//                        txtEmail.setText(i.getEmail().toString());
-//                        txtAddress.setText(i.getAddress().toString());
-//                    }
-
-                    avatar.setImageURI(Uri.parse(getUri.toString()));
+                    if(!getUri.matches("")){
+                        avatar.setImageURI(Uri.parse(getUri.toString()));
+                    }
+                    else {
+                        avatar.setImageResource(R.drawable.user);
+                    }
                     txtUsername.setText(editUsername.getText());
                     txtEmail.setText(editEmail.getText());
                     txtAddress.setText(editAddess.getText());
