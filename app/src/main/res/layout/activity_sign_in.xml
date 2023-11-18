@@ -16,7 +16,9 @@
         android:drawableLeft="@drawable/ic_track_name"
         android:drawablePadding="8dp"
         android:hint="username"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:layout_gravity="center"
+        />
 
     <EditText
         android:id="@+id/passwordSignIn"
@@ -27,7 +29,8 @@
         android:drawableLeft="@drawable/ic_track_name"
         android:drawablePadding="8dp"
         android:hint="Password"
-        android:padding="8dp" />
+        android:padding="8dp"
+        />
 
     <Button
         android:id="@+id/SignIn"
