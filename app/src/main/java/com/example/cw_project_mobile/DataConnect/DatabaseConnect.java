@@ -11,7 +11,8 @@ public class DatabaseConnect {
     @SuppressLint("API")
     public Connection connection(){
         Connection con = null;
-        String ip="192.168.10.28",port="1433",username="sa",password="12345",databasename="Hikes";
+
+        String ip="192.168.1.21",port="1433",username="sa",password="12345",databasename="Hikes";
         StrictMode.ThreadPolicy tp = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(tp);
         try {

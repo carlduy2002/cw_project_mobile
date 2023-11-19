@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/home">
+    android:background="@color/cw_white">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomBar"
-        android:layout_marginBottom="-82dp" />
+        android:layout_marginBottom="-83dp" />
 
     <LinearLayout
         android:id="@+id/bottomBar"
@@ -26,7 +26,7 @@
         android:paddingBottom="15dp"
         android:elevation="10dp"
         android:gravity="center"
-        android:background="#FFFFFF"
+        android:background="@color/cw_mix"
         android:layout_alignParentBottom="true"
         tools:targetApi="lollipop">
 
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home"
-                android:textColor="@color/home"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"
                 android:textSize="16sp"/>
@@ -65,39 +65,41 @@
 
 
         <!--        Notification-->
+
+
+        <!--        Cart-->
+
         <LinearLayout
             android:id="@+id/list_layout"
-            android:background="@android:color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center"
             android:orientation="horizontal"
             android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:gravity="center"
-            android:layout_weight="1">
+            android:paddingEnd="5dp">
 
             <ImageView
                 android:id="@+id/list_img"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/listhike_icon"/>
+                android:src="@drawable/listhike_icon" />
 
 
             <TextView
                 android:id="@+id/list_txt"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="My Hikes"
-                android:textColor="@color/list"
-                android:textStyle="bold"
+                android:layout_height="29dp"
                 android:layout_marginStart="10dp"
-                android:textSize="16sp"/>
+                android:text="My Hikes"
+                android:textColor="@color/cw_black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
         </LinearLayout>
 
-
-        <!--        Cart-->
         <LinearLayout
             android:id="@+id/add_layout"
             android:background="@android:color/transparent"

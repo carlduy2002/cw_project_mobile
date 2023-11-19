@@ -6,23 +6,32 @@
     <color name="gray">#C0C0C0</color>
     <color name="silver">#555555</color>
 
-    <color name="home">#1194AA</color>
-    <color name="list">#AE7E0F</color>
-    <color name="add">#5B37B7</color>
-    <color name="profile">#39AE0F</color>
+    <color name="home">#000000</color>
+    <color name="list">#000000</color>
+    <color name="add">#000000</color>
+    <color name="profile">#000000</color>
 
-    <color name="home_frame">#331194AA</color>
+    <color name="home_frame">#33AE7E0F</color>
     <color name="list_frame">#33AE7E0F</color>
-    <color name="add_frame">#335B37B7</color>
-    <color name="profile_frame">#3339AE0F</color>
+    <color name="add_frame">#33AE7E0F</color>
+    <color name="profile_frame">#33AE7E0F</color>
 
     <color name="btn_warm">#B30412</color>
     <color name="delete_popup">#6F6D6D</color>
 
+
     <color name="GradientStrokeBorder">
         <item name="android:startColor">#91B2E4</item>
-        <item name="android:endColor">#384AC5</item>
+        <item name="android:endColor">#F7F7F7</item>
         <item name="android:linear">145</item>
     </color>
+
+    <color name="cw_primary">#fece2f</color>
+    <color name="cw_secondary">#fece2f</color>
+
+    <color name="cw_yellow">#fece2f</color>
+    <color name="cw_white">#fffefd</color>
+    <color name="cw_black">#1c1918</color>
+    <color name="cw_mix">#6b5515</color>
 
 </resources>

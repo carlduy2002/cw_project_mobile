@@ -171,7 +171,7 @@ public class ProfileFragment extends Fragment {
 
                     if(currentPwd.matches(oldPwd)){
                         dialog.dismiss();
-                        showCreateNewPassowrdPopup();
+                        showCreateNewPassowrdPopup(oldPwd);
                     }
                     else {
                         Toast("Current Pasword is incorrectly");
@@ -201,7 +201,7 @@ public class ProfileFragment extends Fragment {
         dialog.show();
     }
 
-    private void showCreateNewPassowrdPopup() {
+    private void showCreateNewPassowrdPopup(String oldPassword) {
         Dialog dialog = new Dialog(getContext());
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.create_new_password_popup);
@@ -221,21 +221,26 @@ public class ProfileFragment extends Fragment {
                 if(!editNewPwd.getText().toString().matches("")){
                     if(!editConfirmPwd.getText().toString().matches("")){
                         if(editNewPwd.getText().toString().matches(editConfirmPwd.getText().toString())){
-                            String newPassword = hashPassword.hashPassword(editNewPwd.getText().toString());
+                            String newPwd = hashPassword.hashPassword(editNewPwd.getText().toString());
 
-                            //get old pass
-                            String oldPwd = sql.selectPasword(user_id);
-                            //change pass
-                            sql.changePassword(newPassword, user_id);
-                            //get new pass
-                            String newPwd = sql.selectPasword(user_id);
+                            if(!newPwd.matches(oldPassword)){
+                                //get old pass
+                                String oldPassword = sql.selectPasword(user_id);
+                                //change pass
+                                sql.changePassword(newPwd, user_id);
+                                //get new pass
+                                String newPassword = sql.selectPasword(user_id);
 
-                            if(!newPwd.matches(oldPwd)){
-                                Toast("Change Password succeed");
-                                dialog.dismiss();
+                                if(!newPassword.matches(oldPassword)){
+                                    Toast("Change Password succeed");
+                                    dialog.dismiss();
+                                }
+                                else {
+                                    Toast("Change Password failed");
+                                }
                             }
                             else {
-                                Toast("Change Password failed");
+                                Toast("Password already exist before. Please, enter another password");
                             }
                         }
                         else {
@@ -271,6 +276,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private ShapeableImageView avatarUpdate;
+    private String u_name = "", u_email = "";
+    private EditText editUsername, editEmail;
 
     private void showPopupEdit(String username, String email, String address) {
         Dialog dialog = new Dialog(getContext());
@@ -284,8 +291,8 @@ public class ProfileFragment extends Fragment {
         Button btnCancelEdit = dialog.findViewById(R.id.btnCancelEdit);
         Button btnConfirmEdit = dialog.findViewById(R.id.btnConfirmEdit);
 
-        EditText editUsername = dialog.findViewById(R.id.editUsername);
-        EditText editEmail = dialog.findViewById(R.id.editEmail);
+        editUsername = dialog.findViewById(R.id.editUsername);
+        editEmail = dialog.findViewById(R.id.editEmail);
         EditText editAddess = dialog.findViewById(R.id.editAddress);
 
         if(getUri.matches("")){
@@ -317,20 +324,21 @@ public class ProfileFragment extends Fragment {
                 String regexEmail = "^([a-zA-z0-9]+@gmail+\\.[a-zA-Z]{2,})$";
 
                 if(editEmail.getText().toString().matches(regexEmail)){
-                    sql.updateUsers(editUsername.getText().toString(), editEmail.getText().toString(),
-                            editAddess.getText().toString(), getUri,user_id);
+                    if(validateUpdatePrifile() == true){
+                        sql.updateUsers(u_name, u_email, editAddess.getText().toString(), getUri,user_id);
 
-                    if(!getUri.matches("")){
-                        avatar.setImageURI(Uri.parse(getUri.toString()));
-                    }
-                    else {
-                        avatar.setImageResource(R.drawable.user);
-                    }
-                    txtUsername.setText(editUsername.getText());
-                    txtEmail.setText(editEmail.getText());
-                    txtAddress.setText(editAddess.getText());
+                        if(!getUri.matches("")){
+                            avatar.setImageURI(Uri.parse(getUri.toString()));
+                        }
+                        else {
+                            avatar.setImageResource(R.drawable.user);
+                        }
+                        txtUsername.setText(editUsername.getText());
+                        txtEmail.setText(editEmail.getText());
+                        txtAddress.setText(editAddess.getText());
 
-                    dialog.dismiss();
+                        dialog.dismiss();
+                    }
                 }
                 else {
                     Toast("Email is invalid");
@@ -354,6 +362,28 @@ public class ProfileFragment extends Fragment {
 
         dialog.getWindow().setAttributes(lp);
         dialog.show();
+    }
+
+    private boolean validateUpdatePrifile(){
+        SqlQuery sql = new SqlQuery();
+        u_name = editUsername.getText().toString();
+        u_email = editEmail.getText().toString();
+
+        ArrayList<Users> userInfor;
+        userInfor = sql.selectUserInfor(user_id);
+
+        for(Users i : userInfor){
+            if(u_name.matches(i.getUsername())){
+                Toast("Username already exist");
+                return false;
+            }
+            if (u_email.matches(i.getEmail())) {
+                Toast("Email already exist");
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
