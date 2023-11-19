@@ -174,7 +174,19 @@ public class HikeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SqlQuery sql = new SqlQuery();
+
+                //share hike
                 sql.shareHike(hike_id);
+
+                //get new share status
+                String newShareStatus = sql.selectShareState(hike_id);
+
+                if(!newShareStatus.matches("")){
+                    Toast("Share succeed");
+                }
+                else {
+                    Toast("Share failed");
+                }
             }
         });
 

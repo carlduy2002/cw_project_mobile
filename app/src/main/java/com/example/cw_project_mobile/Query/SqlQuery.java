@@ -271,6 +271,62 @@ public class SqlQuery {
         return maxId;
     }
 
+    public ArrayList<Users> selectUserInfor(){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        ArrayList<Users> userInfor = new ArrayList<>();
+
+        try{
+            if(conn != null){
+                String sql = "select username, email from users";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                while (rs.next()){
+                    Users users = new Users();
+                    users.setUsername(rs.getString(1));
+                    users.setEmail(rs.getString(2));
+
+                    userInfor.add(users);
+                }
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+
+        return userInfor;
+    }
+
+    public ArrayList<Users> selectUserInfor(int id){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        ArrayList<Users> userInfor = new ArrayList<>();
+
+        try{
+            if(conn != null){
+                String sql = "select username, email from users where id != '"+id+"'";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                while (rs.next()){
+                    Users users = new Users();
+                    users.setUsername(rs.getString(1));
+                    users.setEmail(rs.getString(2));
+
+                    userInfor.add(users);
+                }
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+
+        return userInfor;
+    }
+
     public int selectObservationMaxID(){
         DatabaseConnect connect = new DatabaseConnect();
         Connection conn = connect.connection();
@@ -397,6 +453,30 @@ public class SqlQuery {
         catch (Exception ex){
             Log.e("Error", ex.getMessage());
         }
+    }
+
+    public String selectShareState(int id){
+        DatabaseConnect connect = new DatabaseConnect();
+        Connection conn = connect.connection();
+
+        String shareState = "";
+
+        try{
+            if(conn != null){
+                String sql = "select share from hikes where hike_id = '"+id+"'";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+
+                while (rs.next()){
+                    shareState = rs.getString(1);
+                }
+            }
+        }
+        catch (Exception ex){
+            Log.e("Error", ex.getMessage());
+        }
+
+        return shareState;
     }
 
     public void updateObservation(String name, String description, String image, int id){
