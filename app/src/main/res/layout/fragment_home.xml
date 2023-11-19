@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/home"
-    tools:context=".FragmentTab.HomeFragment">
+    tools:context=".FragmentTab.HomeFragment"
+    android:background="@drawable/backgoundhiking">
 
     <!-- TODO: Update blank fragment layout -->
     <FrameLayout
@@ -33,7 +33,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:hint="Search...."
-                android:background="@null"
+                android:background="@color/cw_white"
                 android:layout_marginLeft="30dp"/>
 
             <ImageButton
@@ -41,7 +41,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/close"
-                android:background="@android:color/transparent"
+                android:background="@color/cw_black"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
                 android:layout_marginLeft="380dp"/>
@@ -52,13 +52,13 @@
             android:id="@+id/frameNavbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#8FB8BF">
+            android:background="@color/cw_mix">
 
             <ImageView
                 android:layout_width="90dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="7dp"
-                android:src="@drawable/addpage"/>
+                android:layout_marginLeft="0dp"
+                android:src="@drawable/logohiking"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,16 +67,17 @@
                 android:textColor="@color/white"
                 android:textSize="33dp"
                 android:textStyle="bold"
-                android:layout_marginLeft="130dp"/>
+                android:layout_marginLeft="130dp"
+                android:fontFamily="@font/knewave"/>
 
             <ImageButton
                 android:id="@+id/btnSearch"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/search"
-                android:background="@android:color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="375dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="375dp"/>
+                android:background="@color/cw_mix"
+                android:src="@drawable/search" />
 
         </FrameLayout>
 

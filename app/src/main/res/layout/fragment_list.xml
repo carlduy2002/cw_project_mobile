@@ -30,7 +30,7 @@
                 android:id="@+id/eTxtSearch"
                 android:layout_width="355dp"
                 android:layout_height="50dp"
-                android:textColor="@color/black"
+                android:textColor="@color/cw_white"
                 android:textSize="20sp"
                 android:hint="Search...."
                 android:background="@null"
