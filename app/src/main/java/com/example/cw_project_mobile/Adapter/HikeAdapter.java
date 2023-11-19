@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -15,7 +14,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,14 +23,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cw_project_mobile.FragmentTab.HomeFragment;
 import com.example.cw_project_mobile.FragmentTab.ListFragment;
-import com.example.cw_project_mobile.FragmentTab.ProfileFragment;
 import com.example.cw_project_mobile.Hike.HikeDetailFragment;
 import com.example.cw_project_mobile.Object.Hikes;
 import com.example.cw_project_mobile.Query.SqlQuery;
@@ -72,7 +67,7 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
         holder.txtLocation.setText(lstHikes.get(position).getHike_location());
         holder.txtDate.setText(lstHikes.get(position).getHike_date());
         if(lstHikes.get(position).getHike_image().matches("")){
-            holder.img.setImageResource(R.drawable.head);
+            holder.img.setImageResource(R.drawable.fansipan);
         }
         else{
             holder.img.setImageURI(Uri.parse(lstHikes.get(position).getHike_image()));

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -25,13 +24,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cw_project_mobile.Object.Users;
 import com.example.cw_project_mobile.Query.SqlQuery;
 import com.example.cw_project_mobile.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -229,7 +224,7 @@ public class AddFragment extends Fragment {
         popupDescription.setText(description);
 
         if(getUri.matches("")){
-            popupImg.setImageResource(R.drawable.head);
+            popupImg.setImageResource(R.drawable.fansipan);
         }
         else{
             popupImg.setImageURI(Uri.parse(getUri));

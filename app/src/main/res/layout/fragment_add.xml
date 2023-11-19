@@ -47,7 +47,7 @@
                     android:layout_margin="5dp"
                     android:scaleType="fitXY"
                     android:layout_gravity="center"
-                    android:src="@drawable/addpage"
+                    android:src="@drawable/fansipan"
                     android:layout_marginTop="0dp"/>
 
                 <ImageButton

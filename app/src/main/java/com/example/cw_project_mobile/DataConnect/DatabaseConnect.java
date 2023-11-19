@@ -11,9 +11,10 @@ public class DatabaseConnect {
     @SuppressLint("API")
     public Connection connection(){
         Connection con = null;
-        String ip="192.168.11.209",port="1433",username="sa",password="1",databasename="Hikes";
+        String ip="192.168.1.5",port="1433",username="sa",password="1",databasename="Hikes";
         StrictMode.ThreadPolicy tp = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(tp);
+
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
             String connectionUrl = "jdbc:jtds:sqlserver://"+ip+":"+port+

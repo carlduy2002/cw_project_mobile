@@ -108,7 +108,7 @@ public class ObservationDetailFragment extends Fragment {
             txtDateObser.setText(observations.getDate());
 
             if(observations.getObser_img().matches("")){
-                imgObser.setImageResource(R.drawable.head);
+                imgObser.setImageResource(R.drawable.fansipan);
             }
             else {
                 imgObser.setImageURI(Uri.parse(observations.getObser_img()));
@@ -170,7 +170,7 @@ public class ObservationDetailFragment extends Fragment {
         Button btnConfirmObser = dialog.findViewById(R.id.btnConfirmEditObser);
 
         if(getUriObser.matches("")){
-            popupImage.setImageResource(R.drawable.head);
+            popupImage.setImageResource(R.drawable.fansipan);
         }
         else {
             popupImage.setImageURI(Uri.parse(getUriObser));
@@ -202,7 +202,7 @@ public class ObservationDetailFragment extends Fragment {
                     txtDescriptionObser.setText(eTxtDescription.getText());
 
                     if(getUriObser.matches("")){
-                        imgObser.setImageResource(R.drawable.head);
+                        imgObser.setImageResource(R.drawable.fansipan);
                     }
                     else {
                         imgObser.setImageURI(Uri.parse(getUriObser));

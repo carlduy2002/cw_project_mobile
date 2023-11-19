@@ -27,7 +27,7 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_marginTop="30dp"
-                    android:src="@drawable/head"
+                    android:src="@drawable/logohiking"
                     android:layout_gravity="center"
                     app:shapeAppearanceOverlay="@style/circular"
                     app:strokeWidth="5dp"

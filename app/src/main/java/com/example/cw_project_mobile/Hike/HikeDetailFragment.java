@@ -24,8 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cw_project_mobile.Observation.AddObservationFragment;
-import com.example.cw_project_mobile.FragmentTab.HomeFragment;
-import com.example.cw_project_mobile.FragmentTab.ListFragment;
 import com.example.cw_project_mobile.Object.Hikes;
 import com.example.cw_project_mobile.Query.SqlQuery;
 import com.example.cw_project_mobile.R;
@@ -146,7 +144,7 @@ public class HikeDetailFragment extends Fragment {
             getUriEdit = hike.getHike_image();
 
             if(hike.getHike_image().matches("")){
-                img.setImageResource(R.drawable.head);
+                img.setImageResource(R.drawable.fansipan);
             }
             else {
                 img.setImageURI(Uri.parse(hike.getHike_image()));
@@ -332,7 +330,7 @@ public class HikeDetailFragment extends Fragment {
         Button btnConfirmEdit = dialog.findViewById(R.id.btnConfirmEdit);
 
         if(getUriEdit.matches("")){
-            popupImgEdit.setImageResource(R.drawable.head);
+            popupImgEdit.setImageResource(R.drawable.fansipan);
         }
         else{
             popupImgEdit.setImageURI(Uri.parse(getUriEdit));
@@ -395,7 +393,7 @@ public class HikeDetailFragment extends Fragment {
                 txtDescription.setText(popupDescriptionEdit.getText());
 
                 if(getUriEdit.matches("")){
-                    img.setImageResource(R.drawable.head);
+                    img.setImageResource(R.drawable.fansipan);
                 }
                 else {
                     img.setImageURI(Uri.parse(getUriEdit));
