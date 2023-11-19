@@ -38,6 +38,7 @@
         android:drawableLeft="@drawable/ic_track_name"
         android:drawablePadding="8dp"
         android:hint="Password"
+        android:inputType="textPassword"
         android:padding="8dp" />
 
     <EditText
@@ -49,6 +50,7 @@
         android:drawableLeft="@drawable/ic_track_name"
         android:drawablePadding="8dp"
         android:hint="confirm Password"
+        android:inputType="textPassword"
         android:padding="8dp" />
 
     <EditText

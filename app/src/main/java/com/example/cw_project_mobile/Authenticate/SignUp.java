@@ -9,8 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cw_project_mobile.Object.Users;
 import com.example.cw_project_mobile.Query.SqlQuery;
 import com.example.cw_project_mobile.R;
+
+import java.util.ArrayList;
 
 public class SignUp extends AppCompatActivity {
 
@@ -69,6 +72,19 @@ public class SignUp extends AppCompatActivity {
         u_password = password.getText().toString();
         u_confrimPasword = confirmPassword.getText().toString();
         String regexEmail = "^([a-zA-z0-9]+@gmail+\\.[a-zA-Z]{2,})$";
+        String existUsername = "";
+        String existEmail = "";
+
+        SqlQuery sql = new SqlQuery();
+
+        ArrayList<Users> usersInfor;
+        usersInfor = sql.selectUserInfor();
+
+        for (Users i : usersInfor){
+            existUsername = i.getUsername();
+            existEmail = i.getEmail();
+            break;
+        }
 
         if(u_name.matches("") && u_email.matches("") && u_password.matches("") && u_confrimPasword.matches("")){
             Toast("Please, enter all fields");
@@ -78,12 +94,20 @@ public class SignUp extends AppCompatActivity {
             Toast("Please, enter username field");
             return false;
         }
+        if(u_name.matches(existUsername)){
+            Toast("Username already exist");
+            return false;
+        }
         if(u_email.matches("")){
             Toast("Please, enter email field");
             return false;
         }
         if(!u_email.matches(regexEmail)){
-            Toast("Email is invalid");
+            Toast("Email already invalid");
+            return false;
+        }
+        if(u_email.matches(existEmail)){
+            Toast("Email is exist");
             return false;
         }
         if(u_password.matches("")){
