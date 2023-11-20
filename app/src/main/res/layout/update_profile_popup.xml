@@ -152,7 +152,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80px"
-                android:text="Cancel" />
+                android:text="Cancel"
+                android:backgroundTint="@color/cw_black"/>
 
             <Button
                 android:id="@+id/btnConfirmEdit"

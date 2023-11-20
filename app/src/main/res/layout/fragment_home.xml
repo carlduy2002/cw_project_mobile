@@ -69,7 +69,6 @@
                 android:textColor="@color/white"
                 android:textSize="33dp"
                 android:textStyle="bold"
-                android:fontFamily="@font/knewave"
                 android:layout_gravity="center"/>
 
             <ImageButton
