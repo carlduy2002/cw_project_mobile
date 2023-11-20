@@ -9,13 +9,14 @@
     <!-- TODO: Update blank fragment layout -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/cw_yellow">
 
         <FrameLayout
             android:id="@+id/frameSearchObser"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#8FB8BF">
+            android:background="@color/cw_mix">
 
             <ImageButton
                 android:id="@+id/btnCloseSearchObser"
@@ -30,10 +31,10 @@
                 android:id="@+id/eTxtSearchObser"
                 android:layout_width="355dp"
                 android:layout_height="50dp"
-                android:textColor="@color/black"
+                android:textColor="@color/cw_white"
                 android:textSize="20sp"
                 android:hint="Search...."
-                android:background="@null"
+                android:textColorHint="@color/cw_white"
                 android:layout_marginLeft="30dp"/>
 
             <ImageButton
@@ -52,7 +53,7 @@
             android:id="@+id/frameNavbarObser"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#8FB8BF">
+            android:background="@color/cw_mix">
 
             <ImageButton
                 android:background="@android:color/transparent"
@@ -66,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text="Observation"
-                android:textColor="@color/black"
+                android:textColor="@color/cw_white"
                 android:textSize="33dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="30dp"/>
@@ -75,7 +76,7 @@
                 android:id="@+id/btnSearchObser"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/search"
+                android:src="@drawable/search_24"
                 android:background="@android:color/transparent"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="375dp"/>
@@ -93,10 +94,10 @@
             android:id="@+id/btnAddObservation"
             android:layout_width="73dp"
             android:layout_height="69dp"
-            android:src="@drawable/add"
+            android:src="@drawable/add_circle_outline_24"
             android:background="@android:color/transparent"
             android:layout_marginLeft="330dp"
-            android:layout_marginTop="570dp"/>
+            android:layout_marginTop="640dp"/>
 
     </FrameLayout>
 

@@ -10,7 +10,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/popup_bg"
+        android:background="@color/cw_yellow"
         android:orientation="vertical">
 
         <LinearLayout
@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/head"/>
+                android:src="@drawable/fansipan"/>
 
             <ImageButton
                 android:id="@+id/btnUploadObservation"
@@ -99,7 +99,8 @@
                 android:id="@+id/btnCancelObservation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"/>
+                android:text="Cancel"
+                android:backgroundTint="@color/black"/>
 
             <Button
                 android:id="@+id/btnConfirmObservation"

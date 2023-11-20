@@ -5,13 +5,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/popup_bg"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="@color/cw_yellow"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirmation"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="20px"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/head"/>
+                android:src="@drawable/fansipan"/>
 
         </LinearLayout>
 
@@ -219,7 +224,8 @@
                 android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"/>
+                android:text="Cancel"
+                android:backgroundTint="@color/black"/>
 
             <Button
                 android:id="@+id/btnConfirm"

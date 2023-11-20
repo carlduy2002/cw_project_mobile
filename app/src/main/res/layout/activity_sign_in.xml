@@ -39,14 +39,14 @@
         android:id="@+id/passwordSignIn"
         android:layout_width="350dp"
         android:layout_height="50dp"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/edittext_bkg"
         android:drawableLeft="@drawable/lock_24"
         android:drawablePadding="8dp"
         android:hint="Password"
-        android:padding="8dp"
-        android:layout_gravity="center"
-        />
+        android:inputType="textPassword"
+        android:padding="8dp" />
 
     <Button
         android:id="@+id/SignIn"

@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background">
+        android:background="@color/cw_yellow">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background"
+
             android:orientation="vertical">
 
             <ImageButton
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:layout_margin="5dp"
-                android:src="@drawable/arrow_back"/>
+                android:src="@drawable/arrow_back_24"/>
 
             <TextView
                 android:id="@+id/txtBack"
@@ -38,7 +38,8 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="-30dp"/>
+                android:layout_marginTop="-30dp"
+                android:textColor="@color/cw_black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,7 +54,7 @@
                     android:layout_margin="5dp"
                     android:scaleType="fitXY"
                     android:layout_gravity="center"
-                    android:src="@drawable/addpage"
+                    android:src="@drawable/fansipan"
                     android:layout_marginTop="0dp"
                     />
 
@@ -249,14 +250,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_margin="30dp"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:background="@color/cw_yellow">
 
                 <ImageButton
                     android:background="@android:color/transparent"
                     android:id="@+id/IbtnDelete"
                     android:layout_width="60dp"
                     android:layout_height="90dp"
-                    android:src="@drawable/delete"
+                    android:src="@drawable/delete_24"
                     android:layout_margin="10dp"/>
 
                 <ImageButton
@@ -264,7 +266,7 @@
                     android:id="@+id/IbtnUpdate"
                     android:layout_width="60dp"
                     android:layout_height="90dp"
-                    android:src="@drawable/edit"
+                    android:src="@drawable/edit_note_24"
                     android:layout_margin="10dp"/>
 
                 <ImageButton
@@ -272,7 +274,7 @@
                     android:id="@+id/IbtnViewObservation"
                     android:layout_width="60dp"
                     android:layout_height="90dp"
-                    android:src="@drawable/observe"
+                    android:src="@drawable/post_add_24"
                     android:layout_margin="10dp"/>
 
                 <ImageButton
@@ -280,7 +282,7 @@
                     android:id="@+id/IbtnShare"
                     android:layout_width="60dp"
                     android:layout_height="90dp"
-                    android:src="@drawable/share"
+                    android:src="@drawable/baseline_share_24"
                     android:layout_margin="10dp"/>
 
             </LinearLayout>

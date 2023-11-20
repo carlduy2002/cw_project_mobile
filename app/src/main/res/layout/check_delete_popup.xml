@@ -10,8 +10,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/popup_bg"
-        android:backgroundTint="#B5ADAD"
+        android:background="@color/cw_yellow"
         android:orientation="vertical">
 
         <LinearLayout
@@ -50,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="Cancel"
-                android:backgroundTint="@color/delete_popup"
+                android:backgroundTint="@color/black"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="160dp"/>
 
@@ -59,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="Delete"
-                android:backgroundTint="@color/btn_warm"
+                android:backgroundTint="@color/cw_mix"
                 android:layout_marginLeft="260dp"
                 android:layout_marginTop="-40dp"/>
 

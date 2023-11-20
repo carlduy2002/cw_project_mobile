@@ -6,20 +6,21 @@
     android:padding="10dp"
     android:id="@+id/card_view"
     android:orientation="vertical"
-    android:background="@color/silver">
+    android:background="@drawable/background"
+    android:layout_margin="15px">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_observation"
         android:layout_width="match_parent"
-        android:layout_height="96dp"
-        app:cardCornerRadius="10dp">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+       >
 
         <ImageView
             android:id="@+id/imgObservation"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="15px"
             android:scaleType="fitXY"
             android:src="@drawable/fansipan" />
 

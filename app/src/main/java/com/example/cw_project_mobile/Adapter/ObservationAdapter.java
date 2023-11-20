@@ -1,20 +1,15 @@
 package com.example.cw_project_mobile.Adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,15 +18,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cw_project_mobile.FragmentTab.HomeFragment;
-import com.example.cw_project_mobile.Hike.HikeDetailFragment;
 import com.example.cw_project_mobile.Object.Observations;
-import com.example.cw_project_mobile.Observation.AddObservationFragment;
 import com.example.cw_project_mobile.Observation.ObservationDetailFragment;
-import com.example.cw_project_mobile.Query.SqlQuery;
 import com.example.cw_project_mobile.R;
 
 import java.util.ArrayList;
@@ -65,7 +55,7 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
         holder.txtDate.setText(lstObservations.get(position).getDate());
 
         if(lstObservations.get(position).getObser_img().matches("")){
-            holder.obserImage.setImageResource(R.drawable.head);
+            holder.obserImage.setImageResource(R.drawable.fansipan);
         }
         else{
             holder.obserImage.setImageURI(Uri.parse(lstObservations.get(position).getObser_img()));
